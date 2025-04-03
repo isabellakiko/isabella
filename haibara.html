@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <title>图片展示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="樱花一朵.png" type="image/png">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .bg-effect {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(-45deg, #f8d1d1, #f7caca, #fce2e2, #f8dede);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+        }
+
+        .center-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            max-height: 90vh;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-effect"></div>
+    <div id="particles-js"></div>
+    <img class="center-image" src="haibara.png" alt="haibara" />
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 50 },
+                shape: {
+                    type: 'image',
+                    image: { src: '樱花一朵.png', width: 200, height: 200 }
+                },
+                size: { value: 66, random: { enable: true, minimumValue: 50 } },
+                opacity: { value: 0.9 },
+                move: { speed: 1.5, direction: 'bottom', out_mode: 'out' }
+            },
+            interactivity: { events: { onhover: { enable: false } } },
+            retina_detect: true
+        });
+    </script>
+</body>
+</html>
