@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>樱花信笺</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7e9e9;
+            height: 100%;
+        }
+
+        /* 分散式布局 */
+        .message-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .message-box {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+            text-align: center;
+            animation: fadeInOut 6s infinite alternate;
+        }
+
+        #box1 { top: 15%; left: 10%; }
+        #box2 { top: 60%; right: 10%; }
+        #box3 { bottom: 20%; left: 30%; }
+
+        /* 文字渐变效果 */
+        .gradient-text {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee, #84fab0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* 动态闪烁效果 */
+        .sparkle {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+            animation: sparkleEffect 2s infinite alternate;
+        }
+
+        /* 淡入淡出动画 */
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0.6;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 文字闪烁动画 */
+        @keyframes sparkleEffect {
+            0% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        /* 樱花样式 */
+        .sakura {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('樱花一朵.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        /* 随机飘落动画 */
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(110vh) translateX(calc(var(--x-end) * 1vw)) rotate(1080deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="message-container">
+        <div class="message-box" id="box1">
+            <h1 class="gradient-text sparkle">谢谢你借我账号</h1>
+        </div>
+        <div class="message-box" id="box2">
+            <p class="gradient-text sparkle">樱花的祝福飘向你...</p>
+        </div>
+    </div>
+
+    <script>
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.className = 'sakura';
+
+            // 随机参数
+            const startX = Math.random() * 100;
+            const endX = (Math.random() - 0.5) * 200; // -100到100之间的随机值
+            const duration = Math.random() * 3 + 8; // 8-11秒
+            const delay = Math.random() * -5; // 随机开始位置
+
+            sakura.style.cssText = `
+                left: ${startX}vw;
+                --x-end: ${endX};
+                animation: fall ${duration}s linear ${delay}s infinite;
+                filter: hue-rotate(${Math.random()*360}deg);
+            `;
+
+            document.body.appendChild(sakura);
+
+            // 自动移除
+            setTimeout(() => sakura.remove(), (duration - delay) * 1000);
+        }
+
+        // 使用随机间隔创建樱花
+        function generateSakura() {
+            createSakura();
+            setTimeout(generateSakura, Math.random() * 300);
+        }
+
+        // 初始化生成
+        for(let i=0; i<20; i++) {
+            setTimeout(createSakura, Math.random() * 5000);
+        }
+        generateSakura();
+    </script>
+</body>
+</html>
